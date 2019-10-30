@@ -8,7 +8,7 @@ do
   size_of_autoscaling_group=`aws autoscaling describe-auto-scaling-groups \
     --region $region \
     --auto-scaling-group-names=$autoscaling_group_name | \
-    jsawk "return this.AutoScalingGroups[0].Instances.length"`
+    jq -r ".AutoScalingGroups[0].Instances|length"`
 
   printf " ."
   if [ $size_of_autoscaling_group -eq $autoscaling_group_desired_capacity ]; then

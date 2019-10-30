@@ -6,7 +6,7 @@ Script that will build an image from a known instance, make a new launch configu
 
 ## dependancies
  * pip install awscli
- * jsawk
+ * jq
  * aws tags (Project, Role, Environment)
  * aws autoscaling groups
 
@@ -16,11 +16,11 @@ in `config.sh` set your domain and desired number of instances in the auto scali
 You have to fill this out. Make sure you have to AWS Access Key and Secret Access Key handy.
 
 ```
-$ aws configure 
-AWS Access Key ID [None]: 
-AWS Secret Access Key [None]: 
+$ aws configure
+AWS Access Key ID [None]:
+AWS Secret Access Key [None]:
 Default region name [None]: us-west-2
-Default output format [None]: 
+Default output format [None]:
 ```
 
 ## usage

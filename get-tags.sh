@@ -3,14 +3,14 @@ cached_instance_json=`aws ec2 describe-instances \
   --region $region \
   --instance-ids $instance_id`
 
-number_of_tags=`echo $cached_instance_json | \
-  jsawk "return this.Reservations[0].Instances[0].Tags.length"`
+number_of_tags=`echo "$cached_instance_json" | \
+  jq -r ".Reservations[0].Instances[0].Tags|length"`
 
 for i in `seq 1 $number_of_tags`;
 do
   currentIndex=$[$i-1]
-  current_key=`echo $cached_instance_json | jsawk "return this.Reservations[0].Instances[0].Tags[$currentIndex].Key"`
-  current_value=`echo $cached_instance_json | jsawk "return this.Reservations[0].Instances[0].Tags[$currentIndex].Value"`
+  current_key=`echo "$cached_instance_json" | jq -r ".Reservations[0].Instances[0].Tags[$currentIndex].Key"`
+  current_value=`echo "$cached_instance_json" | jq -r ".Reservations[0].Instances[0].Tags[$currentIndex].Value"`
 
   if [ $current_key == "Role" ]; then
     role=$current_value
@@ -21,6 +21,6 @@ do
   fi
 done
 
-instance_type=`echo $cached_instance_json | jsawk "return this.Reservations[0].Instances[0].InstanceType"`
+instance_type=`echo "$cached_instance_json" | jq -r ".Reservations[0].Instances[0].InstanceType"`
 
 echo " . done"
